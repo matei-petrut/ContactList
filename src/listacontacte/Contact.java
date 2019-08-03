@@ -38,4 +38,8 @@ public class Contact {
             return false;
         return true;
     }
+    
+    public String toString() {
+        return "" + nume + " " + prenume + ", " + dataNastere.toString() + ", " + telefon.toString();
+    }
 }

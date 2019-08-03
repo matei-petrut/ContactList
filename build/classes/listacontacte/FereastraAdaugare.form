@@ -35,6 +35,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="fix" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="telefonF" min="-2" pref="174" max="-2" attributes="0"/>
                   </Group>
@@ -78,12 +80,13 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="dataNF" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="telefonF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fix" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="adAgenda" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="anulare" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -118,6 +121,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Adauga in agenda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adAgendaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="anulare">
       <Properties>
@@ -140,6 +146,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataNFActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="fix">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fix"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

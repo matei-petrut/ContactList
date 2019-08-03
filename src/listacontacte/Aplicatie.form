@@ -60,6 +60,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ajutor"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ajutorActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="inregistrare">
               <Properties>
@@ -70,6 +73,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Despre"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="despreActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

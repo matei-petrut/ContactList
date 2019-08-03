@@ -1,7 +1,9 @@
 
 package listacontacte;
 
+import java.time.LocalDate;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class FereastraAdaugare extends javax.swing.JFrame {
 
@@ -28,6 +30,7 @@ public class FereastraAdaugare extends javax.swing.JFrame {
         prenumeF = new javax.swing.JTextField();
         telefonF = new javax.swing.JTextField();
         dataNF = new javax.swing.JTextField();
+        fix = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,6 +43,11 @@ public class FereastraAdaugare extends javax.swing.JFrame {
         jLabel4.setText("Telefon:");
 
         adAgenda.setText("Adauga in agenda");
+        adAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adAgendaActionPerformed(evt);
+            }
+        });
 
         anulare.setText("Anulare");
         anulare.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +68,8 @@ public class FereastraAdaugare extends javax.swing.JFrame {
             }
         });
 
+        fix.setText("Fix");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,6 +85,8 @@ public class FereastraAdaugare extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(fix)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(telefonF, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -107,11 +119,12 @@ public class FereastraAdaugare extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(dataNF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(telefonF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                    .addComponent(telefonF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fix))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adAgenda)
                     .addComponent(anulare))
@@ -132,6 +145,20 @@ public class FereastraAdaugare extends javax.swing.JFrame {
     private void dataNFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataNFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dataNFActionPerformed
+    //ADD ELEMENT TO JLIST AND TO ARRAYLIST
+    private void adAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adAgendaActionPerformed
+        String firstName = numeF.getText();
+        String surName = prenumeF.getText();
+        NrTel phone;
+        if (fix.isSelected()) 
+            phone = new NrFix(telefonF.getText());
+        else
+            phone = new NrMobil(telefonF.getText());
+        LocalDate date = LocalDate.parse(dataNF.getText());
+        
+        Contact newItem = new Contact(firstName, surName, date, phone);
+        ListaContacte.contacte.add(newItem);
+    }//GEN-LAST:event_adAgendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +199,7 @@ public class FereastraAdaugare extends javax.swing.JFrame {
     private javax.swing.JButton adAgenda;
     private javax.swing.JButton anulare;
     private javax.swing.JTextField dataNF;
+    private javax.swing.JCheckBox fix;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

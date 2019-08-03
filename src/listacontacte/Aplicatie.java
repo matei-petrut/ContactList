@@ -28,6 +28,7 @@ public class Aplicatie extends javax.swing.JFrame {
         }
         super.setIconImage(icon);
         super.setTitle("Agenda");
+        deschidere.setVisible(false);
     }
 
     /**
@@ -149,11 +150,21 @@ public class Aplicatie extends javax.swing.JFrame {
         jMenuBar1.add(fisiere);
 
         ajutor.setText("Ajutor");
+        ajutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajutorActionPerformed(evt);
+            }
+        });
 
         inregistrare.setText("Inregistrare");
         ajutor.add(inregistrare);
 
         despre.setText("Despre");
+        despre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                despreActionPerformed(evt);
+            }
+        });
         ajutor.add(despre);
 
         jMenuBar1.add(ajutor);
@@ -233,6 +244,10 @@ public class Aplicatie extends javax.swing.JFrame {
     private void adaugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adaugaActionPerformed
         FereastraAdaugare fa = new FereastraAdaugare();
         fa.setVisible(true);
+        modelLista.addElement(ListaContacte.contacte.get(0));
+        lista.setModel(modelLista);
+        fa.setVisible(false);
+       
     }//GEN-LAST:event_adaugaActionPerformed
 
     private void itemiFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemiFActionPerformed
@@ -242,6 +257,15 @@ public class Aplicatie extends javax.swing.JFrame {
     private void filtruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtruActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_filtruActionPerformed
+
+    private void ajutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajutorActionPerformed
+        
+    }//GEN-LAST:event_ajutorActionPerformed
+
+    private void despreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despreActionPerformed
+        FereastraDespre fd = new FereastraDespre();
+        fd.setVisible(true);
+    }//GEN-LAST:event_despreActionPerformed
 
     /**
      * @param args the command line arguments

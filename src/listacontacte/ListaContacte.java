@@ -6,11 +6,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class ListaContacte {
+    static ArrayList<Contact> contacte = new ArrayList<Contact>();
+    Map criteriuOrdonare;
+    Predicate<Contact> filtruCurent;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -21,20 +27,5 @@ public class ListaContacte {
         
     }
     
-    static void afiseazaContinutRS(ResultSet rs)
-    {
-        System.out.println("continue ResultSet ...");
-        try {
-            rs.beforeFirst();
-            while(rs.next()){
-                System.out.println("persoana:" + rs.getString("nume") + " " + rs.getString("prenume") + " are varsta: "+ rs.getString("varsta") + " ani");
-            }
-            System.out.println("...");
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaContacte.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    
-    }
-    
 }
+   
