@@ -10,7 +10,7 @@ public class Contact {
     LocalDate dataNastere;
     NrTel telefon;
     
-    Contact(String nume, String preunme, LocalDate dataNstere, NrTel telefon) {
+    Contact(String nume, String preunme, LocalDate dataNastere, NrTel telefon) {
         if (valideazaContact()) {
             this.nume = nume;
             this.dataNastere = dataNastere;

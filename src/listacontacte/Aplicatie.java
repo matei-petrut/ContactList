@@ -4,22 +4,27 @@ package listacontacte;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import java.time.LocalDate;
+import java.time.Month;
+
 
 public class Aplicatie extends javax.swing.JFrame {
 
-    private DefaultListModel modelLista = new DefaultListModel();
+    private DefaultListModel people = new DefaultListModel();
     private DefaultComboBoxModel ordonare = new DefaultComboBoxModel(Ordonare.values());
     BufferedImage icon;
     
     public Aplicatie() {
         initComponents();
-        lista.setModel(modelLista);
+        lista.setModel(people);
         itemiO.setModel(ordonare);
         try {
            icon = ImageIO.read(new File("C:\\Users\\Peter\\Desktop\\ListaContacte\\icon.jpg"));
@@ -40,8 +45,18 @@ public class Aplicatie extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jFrame2 = new javax.swing.JFrame();
+        addWindow = new javax.swing.JFrame();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        phoneCheck = new javax.swing.JCheckBox();
+        nameF = new javax.swing.JTextField();
+        nameS = new javax.swing.JTextField();
+        bDay = new javax.swing.JTextField();
+        phone = new javax.swing.JTextField();
         adauga = new javax.swing.JButton();
         sterge = new javax.swing.JButton();
         editeaza = new javax.swing.JButton();
@@ -64,26 +79,87 @@ public class Aplicatie extends javax.swing.JFrame {
         inregistrare = new javax.swing.JMenuItem();
         despre = new javax.swing.JMenuItem();
 
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        addWindow.setAlwaysOnTop(true);
+        addWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
-        jFrame2.getContentPane().setLayout(jFrame2Layout);
-        jFrame2Layout.setHorizontalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jLabel4.setText("Nume:");
+
+        jLabel5.setText("Prenume:");
+
+        jLabel6.setText("Data nasterii (ZZ-LL-AAAA):");
+
+        jLabel7.setText("Telefon:");
+
+        addButton.setText("Adauga");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Anulare");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        phoneCheck.setText("Fix");
+
+        javax.swing.GroupLayout addWindowLayout = new javax.swing.GroupLayout(addWindow.getContentPane());
+        addWindow.getContentPane().setLayout(addWindowLayout);
+        addWindowLayout.setHorizontalGroup(
+            addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addWindowLayout.createSequentialGroup()
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addWindowLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(addButton)
+                        .addGap(60, 60, 60)
+                        .addComponent(cancelButton))
+                    .addGroup(addWindowLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addGroup(addWindowLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(37, 37, 37)
+                                .addComponent(phoneCheck)))
+                        .addGap(24, 24, 24)
+                        .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nameF)
+                            .addComponent(nameS)
+                            .addComponent(bDay)
+                            .addComponent(phone, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
-        jFrame2Layout.setVerticalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        addWindowLayout.setVerticalGroup(
+            addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addWindowLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(nameF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(nameS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(bDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(phoneCheck)
+                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(addWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addButton)
+                    .addComponent(cancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -242,12 +318,9 @@ public class Aplicatie extends javax.swing.JFrame {
     }//GEN-LAST:event_stergeActionPerformed
 
     private void adaugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adaugaActionPerformed
-        FereastraAdaugare fa = new FereastraAdaugare();
-        fa.setVisible(true);
-        modelLista.addElement(ListaContacte.contacte.get(0));
-        lista.setModel(modelLista);
-        fa.setVisible(false);
-       
+        addWindow.setVisible(true);
+        addWindow.setAlwaysOnTop(true);
+        addWindow.setSize(400, 300);
     }//GEN-LAST:event_adaugaActionPerformed
 
     private void itemiFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemiFActionPerformed
@@ -263,13 +336,35 @@ public class Aplicatie extends javax.swing.JFrame {
     }//GEN-LAST:event_ajutorActionPerformed
 
     private void despreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despreActionPerformed
-        FereastraDespre fd = new FereastraDespre();
-        fd.setVisible(true);
+        
     }//GEN-LAST:event_despreActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        addWindow.setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+//        String firstName = nameF.getText();
+//        String surName = nameS.getText();
+//        NrTel phoneN;
+//        if (phoneCheck.isSelected()) 
+//            phoneN = new NrFix(phone.getText());
+//        else
+//            phoneN = new NrMobil(phone.getText());
+//      LocalDate date = LocalDate.parse(bDay.getText());
+        
+//  Contact newItem = new Contact(firstName, surName, date, phoneN);
+        
+        NrMobil mobil = new NrMobil("0756455678");
+        LocalDate date1 = LocalDate.of(1998, 10, 10);
+        
+        people.addElement(new Contact("Ana", "Alin", date1, mobil));
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    public void addItemToList(Contact contact) {
+        people.addElement(contact);
+        
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -304,7 +399,11 @@ public class Aplicatie extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adauga;
+    private javax.swing.JButton addButton;
+    private javax.swing.JFrame addWindow;
     private javax.swing.JMenu ajutor;
+    private javax.swing.JTextField bDay;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JMenuItem deschidere;
     private javax.swing.JMenuItem despre;
     private javax.swing.JButton editeaza;
@@ -316,14 +415,20 @@ public class Aplicatie extends javax.swing.JFrame {
     private javax.swing.JComboBox itemiO;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList lista;
+    private javax.swing.JTextField nameF;
+    private javax.swing.JTextField nameS;
+    private javax.swing.JTextField phone;
+    private javax.swing.JCheckBox phoneCheck;
     private javax.swing.JMenuItem salvare;
     private javax.swing.JButton sterge;
     // End of variables declaration//GEN-END:variables
