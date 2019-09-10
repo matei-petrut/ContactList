@@ -11,7 +11,7 @@ public class Contact {
     Phone phone;
     
     Contact(String firstN, String surN, LocalDate birthDay, Phone phone) {
-        if (valideazaContact()) {
+        if (validateContact()) {
             this.firstN = firstN;
             this.birthDay = birthDay;
             this.phone = phone;
@@ -19,27 +19,19 @@ public class Contact {
         }
     }
     
-    boolean valideazaContact() {
-<<<<<<< HEAD
-        if (valideazaNume_Prenume() && validateData())
-=======
-        if (valideazaNume_Prenume() && valideazaData())
->>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
+    boolean validateContact() {
+        if (validateName() && validateBDay())
             return true;
         return false;
     }
     
-    boolean valideazaNume_Prenume() {
+    boolean validateName() {
         if ((firstN.length() <= 2) || (surN.length() <= 2))
             return false;
         return true;
     }
     
-<<<<<<< HEAD
-    boolean validateData() {
-=======
-    boolean valideazaData() {
->>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
+    boolean validateBDay() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
         
         if (birthDay.compareTo(LocalDate.parse(birthDay.toString(), formatter)) != 0)
