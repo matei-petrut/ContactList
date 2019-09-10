@@ -1,5 +1,5 @@
 
-package listacontacte;
+package contactslist;
 
 import java.sql.Statement;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class ListaContacte {
+public class ContactsList {
     private ArrayList<Contact> contacte = new ArrayList<Contact>();
     Map criteriuOrdonare;
     Predicate<Contact> filtruCurent;

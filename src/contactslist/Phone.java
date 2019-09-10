@@ -1,10 +1,10 @@
 
-package listacontacte;
+package contactslist;
 
-public abstract class NrTel implements Comparable<NrTel> {
+public abstract class Phone implements Comparable<Phone> {
     String nrTel;
     
-    NrTel(String nrTel) {
+    Phone(String nrTel) {
         if (valideazaNumar()) {
             this.nrTel = nrTel;
         }
@@ -13,13 +13,13 @@ public abstract class NrTel implements Comparable<NrTel> {
     public abstract boolean valideazaNumar();
     
     public boolean equals(Object o) {
-        if (nrTel.compareTo(((NrTel) o).nrTel) == 0) {
+        if (nrTel.compareTo(((Phone) o).nrTel) == 0) {
             return true;
         }
         return false;
     }
     
-    public int compareTo(NrTel nrTel) {
+    public int compareTo(Phone nrTel) {
         return Integer.compare(Integer.valueOf(this.nrTel), Integer.valueOf(nrTel.nrTel));
     }
     

@@ -1,15 +1,15 @@
 
-package listacontacte;
+package contactslist;
 
-public class NrMobil extends NrTel {
+public class Landline extends Phone{
     
-    NrMobil(String nrTel) {
+    Landline(String nrTel) {
         super(nrTel);
     }
     public boolean valideazaNumar() {
         if (nrTel.length() != 10)
             return false;
-        if (!nrTel.startsWith("07"))
+        if ((!nrTel.startsWith("02")) || (!nrTel.startsWith("03")))
             return false;
         return true;
     }

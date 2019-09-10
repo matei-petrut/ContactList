@@ -35,8 +35,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="nameF" alignment="0" max="32767" attributes="0"/>
-                              <Component id="nameS" alignment="0" max="32767" attributes="0"/>
+                              <Component id="firstName" alignment="0" max="32767" attributes="0"/>
+                              <Component id="surName" alignment="0" max="32767" attributes="0"/>
                               <Component id="bDay" alignment="0" max="32767" attributes="0"/>
                               <Component id="phone" alignment="0" pref="139" max="32767" attributes="0"/>
                           </Group>
@@ -52,12 +52,12 @@
                   <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="nameF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="firstName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="nameS" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="surName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -122,9 +122,9 @@
             <Property name="text" type="java.lang.String" value="Fix"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nameF">
+        <Component class="javax.swing.JTextField" name="firstName">
         </Component>
-        <Component class="javax.swing.JTextField" name="nameS">
+        <Component class="javax.swing.JTextField" name="surName">
         </Component>
         <Component class="javax.swing.JTextField" name="bDay">
         </Component>
@@ -213,11 +213,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="adauga" min="-2" max="-2" attributes="0"/>
+                      <Component id="addBt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="sterge" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteBt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                      <Component id="editeaza" min="-2" max="-2" attributes="0"/>
+                      <Component id="editBt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -228,11 +228,11 @@
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="itemiO" min="-2" pref="170" max="-2" attributes="0"/>
+                              <Component id="sortItems" min="-2" pref="170" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="itemiF" min="-2" pref="106" max="-2" attributes="0"/>
+                              <Component id="filtrItems" min="-2" pref="106" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -257,7 +257,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="itemiF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="filtrItems" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="filtru" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -265,15 +265,15 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="itemiO" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sortItems" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="157" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="sterge" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
-                  <Component id="editeaza" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
-                  <Component id="adauga" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="deleteBt" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="editBt" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="addBt" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -281,23 +281,23 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="adauga">
+    <Component class="javax.swing.JButton" name="addBt">
       <Properties>
         <Property name="text" type="java.lang.String" value="Adauga contact"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adaugaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addBtActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="sterge">
+    <Component class="javax.swing.JButton" name="deleteBt">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sterge contact selectat"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stergeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBtActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="editeaza">
+    <Component class="javax.swing.JButton" name="editBt">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editeaza contact selectat"/>
       </Properties>
@@ -322,7 +322,7 @@
         <Property name="text" type="java.lang.String" value="Ordonare:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="itemiF">
+    <Component class="javax.swing.JComboBox" name="filtrItems">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -334,7 +334,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemiFActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filtrItemsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -347,7 +347,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filtruActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="itemiO">
+    <Component class="javax.swing.JComboBox" name="sortItems">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -366,7 +366,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="lista">
+        <Component class="javax.swing.JList" name="list">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="5">

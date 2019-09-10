@@ -1,5 +1,5 @@
 
-package listacontacte;
+package contactslist;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,9 +8,9 @@ public class Contact {
     String nume;
     String prenume;
     LocalDate dataNastere;
-    NrTel telefon;
+    Phone telefon;
     
-    Contact(String nume, String preunme, LocalDate dataNastere, NrTel telefon) {
+    Contact(String nume, String preunme, LocalDate dataNastere, Phone telefon) {
         if (valideazaContact()) {
             this.nume = nume;
             this.dataNastere = dataNastere;

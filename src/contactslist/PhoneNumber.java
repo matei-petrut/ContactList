@@ -1,15 +1,15 @@
 
-package listacontacte;
+package contactslist;
 
-public class NrFix extends NrTel{
+public class PhoneNumber extends Phone {
     
-    NrFix(String nrTel) {
+    PhoneNumber(String nrTel) {
         super(nrTel);
     }
     public boolean valideazaNumar() {
         if (nrTel.length() != 10)
             return false;
-        if ((!nrTel.startsWith("02")) || (!nrTel.startsWith("03")))
+        if (!nrTel.startsWith("07"))
             return false;
         return true;
     }
