@@ -5,41 +5,41 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Contact {
-    String nume;
-    String prenume;
-    LocalDate dataNastere;
-    Phone telefon;
+    String firstN;
+    String surN;
+    LocalDate birthDay;
+    Phone phone;
     
-    Contact(String nume, String preunme, LocalDate dataNastere, Phone telefon) {
+    Contact(String firstN, String surN, LocalDate birthDay, Phone phone) {
         if (valideazaContact()) {
-            this.nume = nume;
-            this.dataNastere = dataNastere;
-            this.telefon = telefon;
-            this.prenume = prenume;
+            this.firstN = firstN;
+            this.birthDay = birthDay;
+            this.phone = phone;
+            this.surN = surN;
         }
     }
     
     boolean valideazaContact() {
-        if (valideazaNume_Prenume() && valideazaData())
+        if (valideazaNume_Prenume() && validateData())
             return true;
         return false;
     }
     
     boolean valideazaNume_Prenume() {
-        if ((nume.length() <= 2) || (prenume.length() <= 2))
+        if ((firstN.length() <= 2) || (surN.length() <= 2))
             return false;
         return true;
     }
     
-    boolean valideazaData() {
+    boolean validateData() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
         
-        if (dataNastere.compareTo(LocalDate.parse(dataNastere.toString(), formatter)) != 0)
+        if (birthDay.compareTo(LocalDate.parse(birthDay.toString(), formatter)) != 0)
             return false;
         return true;
     }
     
     public String toString() {
-        return "" + nume + " " + prenume + ", " + dataNastere.toString() + ", " + telefon.toString();
+        return "" + firstN + " " + surN + ", " + birthDay.toString() + ", " + phone.toString();
     }
 }

@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Peter/Desktop/ListaContacte/src/listacontacte/Aplicatie.java</file>
-            <file>file:/C:/Users/Peter/Desktop/ListaContacte/src/listacontacte/ListaContacte.java</file>
-            <file>file:/C:/Users/Peter/Desktop/ListaContacte/src/listacontacte/Contact.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/Contact.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/MainApp.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/Phone.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/Landline.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/PhoneNumber.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/Sorting.java</file>
+            <file>file:/C:/Users/Peter/Desktop/ContactList/src/contactslist/ContactsList.java</file>
         </group>
     </open-files>
 </project-private>
