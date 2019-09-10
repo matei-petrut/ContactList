@@ -3,13 +3,13 @@ package contactslist;
 
 public class Landline extends Phone{
     
-    Landline(String nrTel) {
-        super(nrTel);
+    Landline(String phoneNb) {
+        super(phoneNb);
     }
-    public boolean valideazaNumar() {
-        if (nrTel.length() != 10)
+    public boolean validateNumber() {
+        if (phoneNb.length() != 10)
             return false;
-        if ((!nrTel.startsWith("02")) || (!nrTel.startsWith("03")))
+        if ((!phoneNb.startsWith("02")) || (!phoneNb.startsWith("03")))
             return false;
         return true;
     }

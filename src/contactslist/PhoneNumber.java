@@ -3,13 +3,13 @@ package contactslist;
 
 public class PhoneNumber extends Phone {
     
-    PhoneNumber(String nrTel) {
-        super(nrTel);
+    PhoneNumber(String phoneNb) {
+        super(phoneNb);
     }
-    public boolean valideazaNumar() {
-        if (nrTel.length() != 10)
+    public boolean validateNumber() {
+        if (phoneNb.length() != 10)
             return false;
-        if (!nrTel.startsWith("07"))
+        if (!phoneNb.startsWith("07"))
             return false;
         return true;
     }

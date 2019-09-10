@@ -2,28 +2,28 @@
 package contactslist;
 
 public abstract class Phone implements Comparable<Phone> {
-    String nrTel;
+    String phoneNb;
     
-    Phone(String nrTel) {
-        if (valideazaNumar()) {
-            this.nrTel = nrTel;
+    Phone(String phoneNb) {
+        if (validateNumber()) {
+            this.phoneNb = phoneNb;
         }
     }
     
-    public abstract boolean valideazaNumar();
+    public abstract boolean validateNumber();
     
     public boolean equals(Object o) {
-        if (nrTel.compareTo(((Phone) o).nrTel) == 0) {
+        if (phoneNb.compareTo(((Phone) o).phoneNb) == 0) {
             return true;
         }
         return false;
     }
     
-    public int compareTo(Phone nrTel) {
-        return Integer.compare(Integer.valueOf(this.nrTel), Integer.valueOf(nrTel.nrTel));
+    public int compareTo(Phone phoneNb) {
+        return Integer.compare(Integer.valueOf(this.phoneNb), Integer.valueOf(phoneNb.phoneNb));
     }
     
     public String toString() {
-        return "" + nrTel;
+        return "" + phoneNb;
     }
 }

@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 
 public class ContactsList {
-    private ArrayList<Contact> contacte = new ArrayList<Contact>();
+    private ArrayList<Contact> contacts = new ArrayList<Contact>();
     Map criteriuOrdonare;
     Predicate<Contact> filtruCurent;
 
@@ -28,7 +28,7 @@ public class ContactsList {
     }
     
     public void addContact(Contact newContact) {
-        contacte.add(newContact);
+        contacts.add(newContact);
     }
 }
    
