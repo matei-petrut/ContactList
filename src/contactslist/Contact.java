@@ -20,7 +20,11 @@ public class Contact {
     }
     
     boolean valideazaContact() {
+<<<<<<< HEAD
         if (valideazaNume_Prenume() && validateData())
+=======
+        if (valideazaNume_Prenume() && valideazaData())
+>>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
             return true;
         return false;
     }
@@ -31,7 +35,11 @@ public class Contact {
         return true;
     }
     
+<<<<<<< HEAD
     boolean validateData() {
+=======
+    boolean valideazaData() {
+>>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
         
         if (birthDay.compareTo(LocalDate.parse(birthDay.toString(), formatter)) != 0)

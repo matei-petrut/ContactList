@@ -14,7 +14,11 @@ import java.util.logging.Logger;
 
 
 public class ContactsList {
+<<<<<<< HEAD
     private ArrayList<Contact> contacte = new ArrayList<Contact>();
+=======
+    private ArrayList<Contact> contacts = new ArrayList<Contact>();
+>>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
     Map criteriuOrdonare;
     Predicate<Contact> filtruCurent;
 
@@ -28,7 +32,11 @@ public class ContactsList {
     }
     
     public void addContact(Contact newContact) {
+<<<<<<< HEAD
         contacte.add(newContact);
+=======
+        contacts.add(newContact);
+>>>>>>> 6b461f7801b04c71420cc672162860ff7bdb5e54
     }
 }
    
