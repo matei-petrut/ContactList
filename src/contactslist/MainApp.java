@@ -1,6 +1,7 @@
 
 package contactslist;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,11 @@ public class MainApp extends javax.swing.JFrame {
         super.setIconImage(icon);
         super.setTitle("Agenda");
         deschidere.setVisible(false);
+        
+        MobilePhone pn = new MobilePhone("0745678765");
+        LocalDate ld = LocalDate.of(1998, 12, 12);
+        Contact c = new Contact("Ana", "Alin", ld, pn);
+        
     }
 
     /**
@@ -344,21 +350,20 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-//        String firstName = nameF.getText();
-//        String surName = nameS.getText();
-//        NrTel phoneN;
-//        if (phoneCheck.isSelected()) 
-//            phoneN = new NrFix(phone.getText());
-//        else
-//            phoneN = new PhoneNumber(phone.getText());
-//      LocalDate date = LocalDate.parse(bDay.getText());
+        String firstN = firstName.getText();
+        String surN = surName.getText();
+        LocalDate date = LocalDate.parse(bDay.getText());
+        Phone phoneN;
         
-//  Contact newItem = new Contact(firstName, surName, date, phoneN);
+        if (phoneCheck.isSelected()) 
+            phoneN = new Landline(phone.getText());
+        else
+            phoneN = new MobilePhone(phone.getText());
         
-        PhoneNumber mobil = new PhoneNumber("0756455678");
-        LocalDate date1 = LocalDate.of(1998, 10, 10);
+        Contact newItem = new Contact(firstN, surN, date, phoneN);
+      
+        people.addElement(newItem);
         
-        people.addElement(new Contact("Ana", "Alin", date1, mobil));
     }//GEN-LAST:event_addButtonActionPerformed
 
     public void addItemToList(Contact contact) {

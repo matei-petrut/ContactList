@@ -5,12 +5,12 @@ public abstract class Phone implements Comparable<Phone> {
     String phoneNb;
     
     Phone(String phoneNb) {
-        if (validateNumber()) {
+        if (validateNumber(phoneNb)) {
             this.phoneNb = phoneNb;
         }
     }
     
-    public abstract boolean validateNumber();
+    public abstract boolean validateNumber(String phoneNb);
     
     public boolean equals(Object o) {
         if (phoneNb.compareTo(((Phone) o).phoneNb) == 0) {
