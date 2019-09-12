@@ -26,7 +26,8 @@ public class Contact {
     }
     
     boolean validateBDay(LocalDate birthDay) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate bDay = LocalDate.parse(birthDay.toString(), formatter);
         
         if (birthDay.compareTo(LocalDate.parse(birthDay.toString(), formatter)) != 0)
             return false;

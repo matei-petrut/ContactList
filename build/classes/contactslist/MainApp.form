@@ -93,7 +93,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Data nasterii (ZZ-LL-AAAA):"/>
+            <Property name="text" type="java.lang.String" value="Data nasterii (AAAA-LL-ZZ):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">

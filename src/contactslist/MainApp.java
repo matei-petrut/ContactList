@@ -39,6 +39,7 @@ public class MainApp extends javax.swing.JFrame {
         MobilePhone pn = new MobilePhone("0745678765");
         LocalDate ld = LocalDate.of(1998, 12, 12);
         Contact c = new Contact("Ana", "Alin", ld, pn);
+        people.addElement(c);
         
     }
 
@@ -92,7 +93,7 @@ public class MainApp extends javax.swing.JFrame {
 
         jLabel5.setText("Prenume:");
 
-        jLabel6.setText("Data nasterii (ZZ-LL-AAAA):");
+        jLabel6.setText("Data nasterii (AAAA-LL-ZZ):");
 
         jLabel7.setText("Telefon:");
 
@@ -363,6 +364,11 @@ public class MainApp extends javax.swing.JFrame {
         Contact newItem = new Contact(firstN, surN, date, phoneN);
       
         people.addElement(newItem);
+        
+        firstName.setText("");
+        surName.setText("");     
+        bDay.setText("");        
+        phone.setText("");
         
     }//GEN-LAST:event_addButtonActionPerformed
 
