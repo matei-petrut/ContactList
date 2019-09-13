@@ -15,6 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.time.LocalDate;
 import java.time.Month;
+import javax.swing.JOptionPane;
 
 
 public class MainApp extends javax.swing.JFrame {
@@ -321,7 +322,13 @@ public class MainApp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtActionPerformed
-        // TODO add your handling code here:
+        if (list.getSelectedIndex() != -1) {
+            int dialogButton = JOptionPane.showConfirmDialog(rootPane,"Sunteti sigur ca doriti sa stergeti"
+                               + " contactul selectat?", "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (dialogButton == 0)
+                people.removeElementAt(list.getSelectedIndex());  
+        }
     }//GEN-LAST:event_deleteBtActionPerformed
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtActionPerformed
