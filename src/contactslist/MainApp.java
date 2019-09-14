@@ -39,8 +39,16 @@ public class MainApp extends javax.swing.JFrame {
         
         MobilePhone pn = new MobilePhone("0745678765");
         LocalDate ld = LocalDate.of(1998, 12, 12);
-        Contact c = new Contact("Ana", "Alin", ld, pn);
-        people.addElement(c);
+        Contact c1 = new Contact("Ana", "Alin", ld, pn);
+        Contact c2 = new Contact("An", "Ali", ld, pn);
+        Contact c3 = new Contact("Ans", "Al", ld, pn);
+
+        people.addElement(c1);
+        people.addElement(c2);
+        people.addElement(c3);
+        
+        if (!checkSurN("Alin"))
+            JOptionPane.showMessageDialog(rootPane, "Atentie! Numele este deja prezent in angenda!");
         
     }
 
@@ -65,6 +73,18 @@ public class MainApp extends javax.swing.JFrame {
         surName = new javax.swing.JTextField();
         bDay = new javax.swing.JTextField();
         phone = new javax.swing.JTextField();
+        modifyWindow = new javax.swing.JFrame();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        modifyButton = new javax.swing.JButton();
+        cancelButtonM = new javax.swing.JButton();
+        phoneCheckM = new javax.swing.JCheckBox();
+        firstNameM = new javax.swing.JTextField();
+        surNameM = new javax.swing.JTextField();
+        bDayM = new javax.swing.JTextField();
+        phoneM = new javax.swing.JTextField();
         addBt = new javax.swing.JButton();
         deleteBt = new javax.swing.JButton();
         editBt = new javax.swing.JButton();
@@ -170,6 +190,89 @@ public class MainApp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        modifyWindow.setAlwaysOnTop(true);
+        modifyWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel8.setText("Nume:");
+
+        jLabel9.setText("Prenume:");
+
+        jLabel10.setText("Data nasterii (AAAA-LL-ZZ):");
+
+        jLabel11.setText("Telefon:");
+
+        modifyButton.setText("Modifica");
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButtonM.setText("Anulare");
+        cancelButtonM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonMActionPerformed(evt);
+            }
+        });
+
+        phoneCheckM.setText("Fix");
+
+        javax.swing.GroupLayout modifyWindowLayout = new javax.swing.GroupLayout(modifyWindow.getContentPane());
+        modifyWindow.getContentPane().setLayout(modifyWindowLayout);
+        modifyWindowLayout.setHorizontalGroup(
+            modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modifyWindowLayout.createSequentialGroup()
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(modifyWindowLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(modifyButton)
+                        .addGap(60, 60, 60)
+                        .addComponent(cancelButtonM))
+                    .addGroup(modifyWindowLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addGroup(modifyWindowLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(37, 37, 37)
+                                .addComponent(phoneCheckM)))
+                        .addGap(24, 24, 24)
+                        .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(firstNameM)
+                            .addComponent(surNameM)
+                            .addComponent(bDayM)
+                            .addComponent(phoneM, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
+        modifyWindowLayout.setVerticalGroup(
+            modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modifyWindowLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(firstNameM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(surNameM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(bDayM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(phoneCheckM)
+                    .addComponent(phoneM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(modifyWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modifyButton)
+                    .addComponent(cancelButtonM))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         addBt.setText("Adauga contact");
@@ -187,6 +290,11 @@ public class MainApp extends javax.swing.JFrame {
         });
 
         editBt.setText("Editeaza contact selectat");
+        editBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Filtreaza");
 
@@ -362,27 +470,106 @@ public class MainApp extends javax.swing.JFrame {
         String surN = surName.getText();
         LocalDate date = LocalDate.parse(bDay.getText());
         Phone phoneN;
+        boolean flagName = false;
+        boolean flagPhone = false;
+        
+        if (!checkFirstN(firstN) && !checkSurN(surN))
+            flagName = true;
+        else 
+            JOptionPane.showMessageDialog(rootPane, "Atentie! Numele " + firstN + " " +
+                    surN + " este deja prezent in angenda!");
         
         if (phoneCheck.isSelected()) 
             phoneN = new Landline(phone.getText());
         else
             phoneN = new MobilePhone(phone.getText());
         
-        Contact newItem = new Contact(firstN, surN, date, phoneN);
-      
-        people.addElement(newItem);
+        if (checkPhone(phoneN))
+            flagPhone = true;
+        else
+            JOptionPane.showMessageDialog(rootPane, "Atentie! Exista deja un contact cu numarul " + phoneN.toString() + ".");
         
-        firstName.setText("");
-        surName.setText("");     
-        bDay.setText("");        
-        phone.setText("");
-        
+        if (flagName && flagPhone) {
+            Contact newItem = new Contact(firstN, surN, date, phoneN);
+            people.addElement(newItem);
+            firstName.setText("");  
+            surName.setText("");     
+            bDay.setText("");        
+            phone.setText("");
+        }       
     }//GEN-LAST:event_addButtonActionPerformed
 
-    public void addItemToList(Contact contact) {
-        people.addElement(contact);
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        String firstN;
+        String surN;
+        LocalDate date;
+        Phone phoneN;
+        Contact editedContact = (Contact)people.getElementAt(list.getSelectedIndex());
         
+        if (!checkFirstN(firstNameM.getText()))
+            JOptionPane.showMessageDialog(rootPane,
+            "Numele " + editedContact.getFristN() + " " + editedContact.getSurN() + " este deja prezent in lista!");
+        else {
+            firstN = firstNameM.getText();
+            surN = surNameM.getText();
+        }
+        
+        surN = surNameM.getText();
+        date = LocalDate.parse(bDayM.getText());
+        if (phoneCheckM.isSelected()) 
+            phoneN = new Landline(phoneM.getText());
+        else
+            phoneN = new MobilePhone(phoneM.getText());
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void cancelButtonMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonMActionPerformed
+        modifyWindow.setVisible(false);
+    }//GEN-LAST:event_cancelButtonMActionPerformed
+
+    public boolean checkFirstN(String firstN) {
+        for (int i = 0; i <= people.capacity(); i++)
+        {
+            Contact c = (Contact)people.getElementAt(i);
+            if (firstN.compareToIgnoreCase(c.getFristN()) != 0)
+                return false;
+        }
+        return true;
     }
+    
+    public boolean checkSurN(String surN) {
+        for (int i = 0; i <= people.capacity(); i++)
+        {
+            Contact c = (Contact)people.getElementAt(i);
+            if (surN.compareToIgnoreCase(c.getSurN()) != 0)
+                return false;
+        }
+        return true;
+    }
+    
+    public boolean checkPhone(Phone phone) {
+        for (int i = 0; i < people.getSize(); i++)
+        {
+            Contact c = (Contact)people.getElementAt(i);
+            if ((phone.toString()).compareToIgnoreCase(c.getPhone().toString()) != 0)
+                return false;
+        }
+        return true;
+    }
+    
+    private void editBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtActionPerformed
+        if (list.getSelectedIndex() != -1) {
+            modifyWindow.setVisible(true);
+            modifyWindow.setAlwaysOnTop(true);
+            modifyWindow.setSize(400, 300);
+            Contact contact = (Contact)people.get(list.getSelectedIndex());
+            firstNameM.setText(contact.getFristN());
+            surNameM.setText(contact.getSurN());
+            bDayM.setText(contact.getBirthDay().toString());
+            phoneM.setText(contact.getPhone().toString());
+            
+        }
+    }//GEN-LAST:event_editBtActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -422,7 +609,9 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JFrame addWindow;
     private javax.swing.JMenu ajutor;
     private javax.swing.JTextField bDay;
+    private javax.swing.JTextField bDayM;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JButton cancelButtonM;
     private javax.swing.JButton deleteBt;
     private javax.swing.JMenuItem deschidere;
     private javax.swing.JMenuItem despre;
@@ -430,25 +619,35 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JComboBox filtrItems;
     private javax.swing.JTextField filtru;
     private javax.swing.JTextField firstName;
+    private javax.swing.JTextField firstNameM;
     private javax.swing.JMenu fisiere;
     private javax.swing.JMenuItem iesire;
     private javax.swing.JMenuItem inregistrare;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList list;
+    private javax.swing.JButton modifyButton;
+    private javax.swing.JFrame modifyWindow;
     private javax.swing.JTextField phone;
     private javax.swing.JCheckBox phoneCheck;
+    private javax.swing.JCheckBox phoneCheckM;
+    private javax.swing.JTextField phoneM;
     private javax.swing.JMenuItem salvare;
     private javax.swing.JComboBox sortItems;
     private javax.swing.JTextField surName;
+    private javax.swing.JTextField surNameM;
     // End of variables declaration//GEN-END:variables
 }

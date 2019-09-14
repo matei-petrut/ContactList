@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Contact {
-    String firstN;
-    String surN;
-    LocalDate birthDay;
-    Phone phone;
+    private String firstN;
+    private String surN;
+    private LocalDate birthDay;
+    private Phone phone;
     
     Contact(String firstN, String surN, LocalDate birthDay, Phone phone) {
         if (validateName(firstN, surN) && validateBDay(birthDay)) {
@@ -17,6 +17,22 @@ public class Contact {
             this.phone = phone;
             this.surN = surN;
         }
+    }
+    
+    public String getFristN() {
+        return firstN;
+    }
+    
+    public String getSurN(){
+        return surN;
+    }
+    
+    public LocalDate getBirthDay() {
+        return birthDay;
+    }
+    
+    public Phone getPhone() {
+        return phone;
     }
     
     boolean validateName(String firstN, String surN) {
