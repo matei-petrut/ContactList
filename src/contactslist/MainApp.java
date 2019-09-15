@@ -47,8 +47,10 @@ public class MainApp extends javax.swing.JFrame {
         people.addElement(c2);
         people.addElement(c3);
         
-        if (!checkSurN("Alin"))
+        if (checkFullName("ana", "alin"))
             JOptionPane.showMessageDialog(rootPane, "Atentie! Numele este deja prezent in angenda!");
+        if (!checkPhone(pn))
+            JOptionPane.showMessageDialog(rootPane, "Atentie! Numarul este deja prezent in angenda!");
         
     }
 
@@ -466,18 +468,19 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String firstN = firstName.getText();
-        String surN = surName.getText();
         LocalDate date = LocalDate.parse(bDay.getText());
         Phone phoneN;
+        int firstNValue = checkFirstN(firstName.getText());
+        int surNValue = checkSurN(surName.getText());
         boolean flagName = false;
         boolean flagPhone = false;
         
-        if (!checkFirstN(firstN) && !checkSurN(surN))
-            flagName = true;
-        else 
-            JOptionPane.showMessageDialog(rootPane, "Atentie! Numele " + firstN + " " +
-                    surN + " este deja prezent in angenda!");
+        if (checkFullName(firstName.getText(), surName.getText())) 
+            flagName = true; 
+        else
+            JOptionPane.showMessageDialog(rootPane, "Atentie! Numele " + firstName.getText() + " " +
+                    surName.getText() + " este deja prezent in angenda!");
+        
         
         if (phoneCheck.isSelected()) 
             phoneN = new Landline(phone.getText());
@@ -490,7 +493,7 @@ public class MainApp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Atentie! Exista deja un contact cu numarul " + phoneN.toString() + ".");
         
         if (flagName && flagPhone) {
-            Contact newItem = new Contact(firstN, surN, date, phoneN);
+            Contact newItem = new Contact(firstName.getText(), surName.getText(), date, phoneN);
             people.addElement(newItem);
             firstName.setText("");  
             surName.setText("");     
@@ -506,13 +509,13 @@ public class MainApp extends javax.swing.JFrame {
         Phone phoneN;
         Contact editedContact = (Contact)people.getElementAt(list.getSelectedIndex());
         
-        if (!checkFirstN(firstNameM.getText()))
-            JOptionPane.showMessageDialog(rootPane,
-            "Numele " + editedContact.getFristN() + " " + editedContact.getSurN() + " este deja prezent in lista!");
-        else {
-            firstN = firstNameM.getText();
-            surN = surNameM.getText();
-        }
+//        if (checkFirstN(firstNameM.getText()))
+//            JOptionPane.showMessageDialog(rootPane,
+//            "Numele " + editedContact.getFristN() + " " + editedContact.getSurN() + " este deja prezent in lista!");
+//        else {
+//            firstN = firstNameM.getText();
+//            surN = surNameM.getText();
+//        }
         
         surN = surNameM.getText();
         date = LocalDate.parse(bDayM.getText());
@@ -526,31 +529,44 @@ public class MainApp extends javax.swing.JFrame {
         modifyWindow.setVisible(false);
     }//GEN-LAST:event_cancelButtonMActionPerformed
 
-    public boolean checkFirstN(String firstN) {
-        for (int i = 0; i <= people.capacity(); i++)
-        {
+    public boolean checkFullName(String firstN, String surN) {
+        String fullN = firstN + " " + surN;
+        
+        for (int i = 0; i < people.getSize(); i++) {
             Contact c = (Contact)people.getElementAt(i);
-            if (firstN.compareToIgnoreCase(c.getFristN()) != 0)
+            String nameToComp = c.getFristN() + " " + c.getSurN();
+            
+            if (fullN.equalsIgnoreCase(nameToComp))
                 return false;
         }
         return true;
     }
     
-    public boolean checkSurN(String surN) {
-        for (int i = 0; i <= people.capacity(); i++)
+    public int checkFirstN(String firstN) {
+        for (int i = 0; i < people.getSize(); i++)
         {
             Contact c = (Contact)people.getElementAt(i);
-            if (surN.compareToIgnoreCase(c.getSurN()) != 0)
-                return false;
+            if (firstN.compareToIgnoreCase(c.getFristN()) == 0)
+                return i;
         }
-        return true;
+        return -1;
+    }
+    
+    public int checkSurN(String surN) {
+        for (int i = 0; i < people.getSize(); i++)
+        {
+            Contact c = (Contact)people.getElementAt(i);
+            if (surN.compareToIgnoreCase(c.getSurN()) == 0)
+                return i;
+        }
+        return -1;
     }
     
     public boolean checkPhone(Phone phone) {
         for (int i = 0; i < people.getSize(); i++)
         {
             Contact c = (Contact)people.getElementAt(i);
-            if ((phone.toString()).compareToIgnoreCase(c.getPhone().toString()) != 0)
+            if (phone.compareTo(c.getPhone()) == 0)
                 return false;
         }
         return true;
