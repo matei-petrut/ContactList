@@ -15,19 +15,23 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
 public class MainApp extends javax.swing.JFrame {
 
     private DefaultListModel people = new DefaultListModel();
-    private DefaultComboBoxModel ordonare = new DefaultComboBoxModel(Sorting.values());
+    private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
+    private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
+    private Contact[] aux = new Contact[people.getSize()];
     BufferedImage icon;
     
     public MainApp() {
         initComponents();
         list.setModel(people);
-        sortItems.setModel(ordonare);
+        sortItems.setModel(sort);
+        filterItems.setModel(filter);
         try {
            icon = ImageIO.read(new File("C:\\Users\\Peter\\Desktop\\ListaContacte\\icon.jpg"));
         } catch (IOException ex) {
@@ -39,18 +43,14 @@ public class MainApp extends javax.swing.JFrame {
         
         MobilePhone pn = new MobilePhone("0745678765");
         LocalDate ld = LocalDate.of(1998, 12, 12);
-        Contact c1 = new Contact("Ana", "Alin", ld, pn);
-        Contact c2 = new Contact("An", "Ali", ld, pn);
-        Contact c3 = new Contact("Ans", "Al", ld, pn);
-
+        Contact c1 = new Contact("Andr", "Alin", ld, pn);
+        Contact c2 = new Contact("Ba", "Ali", ld, pn);
+        Contact c3 = new Contact("Mir", "Al", ld, pn);
+       
         people.addElement(c1);
         people.addElement(c2);
         people.addElement(c3);
-        
-        if (checkFullName("ana", "alin"))
-            JOptionPane.showMessageDialog(rootPane, "Atentie! Numele este deja prezent in angenda!");
-        if (!checkPhone(pn))
-            JOptionPane.showMessageDialog(rootPane, "Atentie! Numarul este deja prezent in angenda!");
+        people.copyInto(aux);
         
     }
 
@@ -90,16 +90,17 @@ public class MainApp extends javax.swing.JFrame {
         addBt = new javax.swing.JButton();
         deleteBt = new javax.swing.JButton();
         editBt = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        filterButton = new javax.swing.JButton();
+        sortButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        filtrItems = new javax.swing.JComboBox();
+        filterItems = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         filtru = new javax.swing.JTextField();
         sortItems = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
+        resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fisiere = new javax.swing.JMenu();
         deschidere = new javax.swing.JMenuItem();
@@ -298,18 +299,28 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Filtreaza");
+        filterButton.setText("Filtreaza");
+        filterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Ordoneaza");
+        sortButton.setText("Ordoneaza");
+        sortButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Filtrare:");
 
         jLabel2.setText("Ordonare:");
 
-        filtrItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        filtrItems.addActionListener(new java.awt.event.ActionListener() {
+        filterItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        filterItems.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filtrItemsActionPerformed(evt);
+                filterItemsActionPerformed(evt);
             }
         });
 
@@ -322,6 +333,11 @@ public class MainApp extends javax.swing.JFrame {
         });
 
         sortItems.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        sortItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortItemsActionPerformed(evt);
+            }
+        });
 
         list.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -329,6 +345,13 @@ public class MainApp extends javax.swing.JFrame {
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(list);
+
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         fisiere.setText("Fisiere");
 
@@ -386,21 +409,24 @@ public class MainApp extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(sortItems, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(filtrItems, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(filtru, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(filterItems, 0, 152, Short.MAX_VALUE)
+                            .addComponent(sortItems, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(filtru, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetButton)
+                                .addGap(91, 91, 91)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sortButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(filterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -408,16 +434,17 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(filterButton)
                     .addComponent(jLabel1)
-                    .addComponent(filtrItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(filtru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(sortButton)
                     .addComponent(jLabel2)
-                    .addComponent(sortItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sortItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -447,9 +474,9 @@ public class MainApp extends javax.swing.JFrame {
         addWindow.setSize(400, 300);
     }//GEN-LAST:event_addBtActionPerformed
 
-    private void filtrItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtrItemsActionPerformed
+    private void filterItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterItemsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_filtrItemsActionPerformed
+    }//GEN-LAST:event_filterItemsActionPerformed
 
     private void filtruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtruActionPerformed
         // TODO add your handling code here:
@@ -470,8 +497,6 @@ public class MainApp extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         LocalDate date = LocalDate.parse(bDay.getText());
         Phone phoneN;
-        int firstNValue = checkFirstN(firstName.getText());
-        int surNValue = checkSurN(surName.getText());
         boolean flagName = false;
         boolean flagPhone = false;
         
@@ -503,26 +528,33 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        String firstN;
-        String surN;
-        LocalDate date;
+        LocalDate date = LocalDate.parse(bDayM.getText());
         Phone phoneN;
+        boolean flagName = true;
+        boolean flagPhone = true;
         Contact editedContact = (Contact)people.getElementAt(list.getSelectedIndex());
         
-//        if (checkFirstN(firstNameM.getText()))
-//            JOptionPane.showMessageDialog(rootPane,
-//            "Numele " + editedContact.getFristN() + " " + editedContact.getSurN() + " este deja prezent in lista!");
-//        else {
-//            firstN = firstNameM.getText();
-//            surN = surNameM.getText();
-//        }
-        
-        surN = surNameM.getText();
-        date = LocalDate.parse(bDayM.getText());
+        if (!checkFullName(firstNameM.getText(), surNameM.getText())) {
+            JOptionPane.showMessageDialog(rootPane,
+            "Numele " + firstNameM.getText() + " " + surNameM.getText() + " este deja prezent in lista!");
+            flagName = false;
+        }
         if (phoneCheckM.isSelected()) 
             phoneN = new Landline(phoneM.getText());
         else
             phoneN = new MobilePhone(phoneM.getText());
+        
+        if (!checkPhone(phoneN)) {
+            JOptionPane.showMessageDialog(rootPane,
+            "Numarul " + phoneN.toString() + " este deja prezent in lista!");
+            flagPhone = false;
+        }
+        
+        if (flagName && flagPhone) {
+            Contact newItem = new Contact(firstNameM.getText(), surNameM.getText(), date, phoneN);
+            people.add(list.getSelectedIndex(), newItem);
+            people.removeElement(editedContact);
+        }
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void cancelButtonMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonMActionPerformed
@@ -540,26 +572,6 @@ public class MainApp extends javax.swing.JFrame {
                 return false;
         }
         return true;
-    }
-    
-    public int checkFirstN(String firstN) {
-        for (int i = 0; i < people.getSize(); i++)
-        {
-            Contact c = (Contact)people.getElementAt(i);
-            if (firstN.compareToIgnoreCase(c.getFristN()) == 0)
-                return i;
-        }
-        return -1;
-    }
-    
-    public int checkSurN(String surN) {
-        for (int i = 0; i < people.getSize(); i++)
-        {
-            Contact c = (Contact)people.getElementAt(i);
-            if (surN.compareToIgnoreCase(c.getSurN()) == 0)
-                return i;
-        }
-        return -1;
     }
     
     public boolean checkPhone(Phone phone) {
@@ -586,6 +598,91 @@ public class MainApp extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editBtActionPerformed
 
+    private void sortItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortItemsActionPerformed
+        
+    }//GEN-LAST:event_sortItemsActionPerformed
+
+    private void sortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortButtonActionPerformed
+        Sorting sortFilter = (Sorting)sort.getSelectedItem();
+        
+        for (int i = 0; i < people.getSize() - 1; i++) {
+            for (int j = i + 1; j < people.getSize(); j++ ) {
+                Contact c1 = (Contact)people.getElementAt(i);
+                Contact c2 = (Contact)people.getElementAt(j);
+                
+                switch(sortFilter) {
+                    case BY_FIRST_NAME:
+                        if (c1.getFristN().compareToIgnoreCase(c2.getFristN()) > 0) 
+                            switchItems(c1, c2, i ,j);
+                        break;
+                        
+                    case BY_SUR_NAME:
+                        if (c1.getSurN().compareToIgnoreCase(c2.getSurN()) > 0) 
+                            switchItems(c1, c2, i ,j);
+                        break;
+                        
+                    case BY_BIRTHDAY:
+                        if (c1.getBirthDay().isAfter(c2.getBirthDay())) 
+                            switchItems(c1, c2, i ,j);
+                        break;  
+                        
+                    case BY_PHONE:
+                        if (c1.getPhone().toString().compareToIgnoreCase(c2.getPhone().toString()) > 0) 
+                            switchItems(c1, c2, i ,j);
+                        break;       
+            }
+            }
+        }
+    }//GEN-LAST:event_sortButtonActionPerformed
+
+    private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
+        Filter selectedFilter = (Filter)filter.getSelectedItem();
+      
+        for (int i = 0; i < people.getSize(); i++) {
+            Contact c = (Contact)people.getElementAt(i);
+            
+            switch(selectedFilter) {
+                case LANDLINE:
+                    if (c.getPhone().toString().startsWith("07"))
+                        people.removeElement(c);
+                    break;
+                    
+                case MOBILE_PHONE:
+                    if (!c.getPhone().toString().startsWith("07"))
+                        people.removeElement(c);
+                    break;    
+                    
+                case BIRTHDAY_TODAY:
+                    if ((c.getBirthDay().getMonth() != LocalDate.now().getMonth()) &&
+                           (c.getBirthDay().getDayOfMonth() != LocalDate.now().getDayOfMonth()))
+                        people.removeElement(c);
+                    break;    
+                    
+                case BIRTHDAY_THIS_MONTH:
+                    if ((c.getBirthDay().getMonth() != LocalDate.now().getMonth()) &&
+                            (c.getBirthDay().getDayOfMonth() > LocalDate.now().getDayOfMonth()))
+                        people.removeElement(c);
+                    break;        
+            }
+        }        
+    }//GEN-LAST:event_filterButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < aux.length; i++) {
+            model.addElement(aux[i]);
+        }
+        
+        list.setModel(model);
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    public void switchItems(Contact c1, Contact c2, int index1, int index2) {
+        people.removeElementAt(index1);
+        people.add(index1, c2);
+        people.removeElementAt(index2);
+        people.add(index2, c1);
+    }
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -632,15 +729,14 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem deschidere;
     private javax.swing.JMenuItem despre;
     private javax.swing.JButton editBt;
-    private javax.swing.JComboBox filtrItems;
+    private javax.swing.JButton filterButton;
+    private javax.swing.JComboBox filterItems;
     private javax.swing.JTextField filtru;
     private javax.swing.JTextField firstName;
     private javax.swing.JTextField firstNameM;
     private javax.swing.JMenu fisiere;
     private javax.swing.JMenuItem iesire;
     private javax.swing.JMenuItem inregistrare;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -661,7 +757,9 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JCheckBox phoneCheck;
     private javax.swing.JCheckBox phoneCheckM;
     private javax.swing.JTextField phoneM;
+    private javax.swing.JButton resetButton;
     private javax.swing.JMenuItem salvare;
+    private javax.swing.JButton sortButton;
     private javax.swing.JComboBox sortItems;
     private javax.swing.JTextField surName;
     private javax.swing.JTextField surNameM;

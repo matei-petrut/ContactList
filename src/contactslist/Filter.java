@@ -9,14 +9,13 @@ package contactslist;
  *
  * @author Peter
  */
-public enum Sorting {
-    BY_FIRST_NAME,
-    BY_SUR_NAME,
-    BY_BIRTHDAY,
-    BY_PHONE;
+public enum Filter {
+    LANDLINE,
+    MOBILE_PHONE,
+    BIRTHDAY_TODAY,
+    BIRTHDAY_THIS_MONTH;
     
     public String toString() {
         return this.name().replace("_", " ");
     }
-    
 }
