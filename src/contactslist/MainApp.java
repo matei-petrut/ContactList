@@ -24,7 +24,7 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultListModel people = new DefaultListModel();
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
-    private Contact[] aux = new Contact[people.getSize()];
+    private Contact[] aux = new Contact[100];
     BufferedImage icon;
     
     public MainApp() {
@@ -534,7 +534,9 @@ public class MainApp extends javax.swing.JFrame {
         boolean flagPhone = true;
         Contact editedContact = (Contact)people.getElementAt(list.getSelectedIndex());
         
-        if (!checkFullName(firstNameM.getText(), surNameM.getText())) {
+        if (!checkFullName(firstNameM.getText(), surNameM.getText()) && 
+                firstNameM.getText().compareToIgnoreCase(editedContact.getFristN()) != 0 &&
+                surNameM.getText().compareToIgnoreCase(editedContact.getSurN()) != 0 ) {
             JOptionPane.showMessageDialog(rootPane,
             "Numele " + firstNameM.getText() + " " + surNameM.getText() + " este deja prezent in lista!");
             flagName = false;
@@ -544,7 +546,7 @@ public class MainApp extends javax.swing.JFrame {
         else
             phoneN = new MobilePhone(phoneM.getText());
         
-        if (!checkPhone(phoneN)) {
+        if (!checkPhone(phoneN) && !phoneN.equals(editedContact.getPhone())) {
             JOptionPane.showMessageDialog(rootPane,
             "Numarul " + phoneN.toString() + " este deja prezent in lista!");
             flagPhone = false;
@@ -554,6 +556,7 @@ public class MainApp extends javax.swing.JFrame {
             Contact newItem = new Contact(firstNameM.getText(), surNameM.getText(), date, phoneN);
             people.add(list.getSelectedIndex(), newItem);
             people.removeElement(editedContact);
+            modifyWindow.setVisible(false);
         }
     }//GEN-LAST:event_modifyButtonActionPerformed
 
@@ -670,10 +673,12 @@ public class MainApp extends javax.swing.JFrame {
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         DefaultListModel model = new DefaultListModel();
         for (int i = 0; i < aux.length; i++) {
-            model.addElement(aux[i]);
+            if (!people.contains(aux[i]))
+                people.addElement(aux[i]);
         }
         
         list.setModel(model);
+        
     }//GEN-LAST:event_resetButtonActionPerformed
 
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
