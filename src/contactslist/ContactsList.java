@@ -24,7 +24,24 @@ public class ContactsList {
         Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
         Statement s = dbConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
         
+        WelcomeScreen welcome = new WelcomeScreen();
+        welcome.setVisible(true);
         
+        try {
+            for (int i = 0; i <= 100; i++) {
+                Thread.sleep(20);
+                WelcomeScreen.index.setText("" + i);
+                WelcomeScreen.progresBar.setValue(i);
+                
+                if (i == 100) {
+                    welcome.setVisible(false);
+                    MainApp main = new MainApp();
+                    main.setVisible(true);
+                }  
+            }
+        } catch(Exception e) {
+            
+        }
     }
     
     public void addContact(Contact newContact) {

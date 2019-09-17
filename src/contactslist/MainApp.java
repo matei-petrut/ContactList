@@ -1,6 +1,7 @@
 
 package contactslist;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +17,11 @@ import javax.swing.JFrame;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 
 public class MainApp extends javax.swing.JFrame {
@@ -25,7 +30,7 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
     private Contact[] aux = new Contact[100];
-    BufferedImage icon;
+    BufferedImage icon, image;
     
     public MainApp() {
         initComponents();
@@ -33,14 +38,14 @@ public class MainApp extends javax.swing.JFrame {
         sortItems.setModel(sort);
         filterItems.setModel(filter);
         try {
-           icon = ImageIO.read(new File("C:\\Users\\Peter\\Desktop\\ListaContacte\\icon.jpg"));
+           icon = ImageIO.read(new File("src\\images\\icon.jpg"));
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         super.setIconImage(icon);
         super.setTitle("Agenda");
-        deschidere.setVisible(false);
-        
+        open.setVisible(false);
         MobilePhone pn = new MobilePhone("0745678765");
         LocalDate ld = LocalDate.of(1998, 12, 12);
         Contact c1 = new Contact("Andr", "Alin", ld, pn);
@@ -51,7 +56,7 @@ public class MainApp extends javax.swing.JFrame {
         people.addElement(c2);
         people.addElement(c3);
         people.copyInto(aux);
-        
+       
     }
 
     /**
@@ -101,12 +106,13 @@ public class MainApp extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
         resetButton = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        fisiere = new javax.swing.JMenu();
-        deschidere = new javax.swing.JMenuItem();
-        salvare = new javax.swing.JMenuItem();
-        iesire = new javax.swing.JMenuItem();
-        ajutor = new javax.swing.JMenu();
+        files = new javax.swing.JMenu();
+        open = new javax.swing.JMenuItem();
+        save = new javax.swing.JMenuItem();
+        exit = new javax.swing.JMenuItem();
+        help = new javax.swing.JMenu();
         inregistrare = new javax.swing.JMenuItem();
         despre = new javax.swing.JMenuItem();
 
@@ -277,6 +283,7 @@ public class MainApp extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         addBt.setText("Adauga contact");
         addBt.addActionListener(new java.awt.event.ActionListener() {
@@ -353,28 +360,39 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        fisiere.setText("Fisiere");
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        deschidere.setText("Deschidere");
-        fisiere.add(deschidere);
+        files.setText("Fisiere");
 
-        salvare.setText("Salvare");
-        fisiere.add(salvare);
+        open.setText("Deschidere");
+        files.add(open);
 
-        iesire.setText("Iesire");
-        fisiere.add(iesire);
+        save.setText("Salvare");
+        files.add(save);
 
-        jMenuBar1.add(fisiere);
+        exit.setText("Iesire");
+        files.add(exit);
 
-        ajutor.setText("Ajutor");
-        ajutor.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(files);
+
+        help.setText("Ajutor");
+        help.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajutorActionPerformed(evt);
+                helpActionPerformed(evt);
             }
         });
 
         inregistrare.setText("Inregistrare");
-        ajutor.add(inregistrare);
+        help.add(inregistrare);
 
         despre.setText("Despre");
         despre.addActionListener(new java.awt.event.ActionListener() {
@@ -382,9 +400,9 @@ public class MainApp extends javax.swing.JFrame {
                 despreActionPerformed(evt);
             }
         });
-        ajutor.add(despre);
+        help.add(despre);
 
-        jMenuBar1.add(ajutor);
+        jMenuBar1.add(help);
 
         setJMenuBar(jMenuBar1);
 
@@ -395,9 +413,6 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addBt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -418,7 +433,7 @@ public class MainApp extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(filtru, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addComponent(filtru, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -427,7 +442,11 @@ public class MainApp extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(sortButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(filterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -446,7 +465,9 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(sortItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deleteBt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -456,6 +477,7 @@ public class MainApp extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtActionPerformed
@@ -482,9 +504,9 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_filtruActionPerformed
 
-    private void ajutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajutorActionPerformed
+    private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
         
-    }//GEN-LAST:event_ajutorActionPerformed
+    }//GEN-LAST:event_helpActionPerformed
 
     private void despreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despreActionPerformed
         
@@ -677,8 +699,7 @@ public class MainApp extends javax.swing.JFrame {
                 people.addElement(aux[i]);
         }
         
-        list.setModel(model);
-        
+        list.setModel(model);      
     }//GEN-LAST:event_resetButtonActionPerformed
 
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
@@ -725,22 +746,21 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton addBt;
     private javax.swing.JButton addButton;
     private javax.swing.JFrame addWindow;
-    private javax.swing.JMenu ajutor;
     private javax.swing.JTextField bDay;
     private javax.swing.JTextField bDayM;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton cancelButtonM;
     private javax.swing.JButton deleteBt;
-    private javax.swing.JMenuItem deschidere;
     private javax.swing.JMenuItem despre;
     private javax.swing.JButton editBt;
+    private javax.swing.JMenuItem exit;
+    private javax.swing.JMenu files;
     private javax.swing.JButton filterButton;
     private javax.swing.JComboBox filterItems;
     private javax.swing.JTextField filtru;
     private javax.swing.JTextField firstName;
     private javax.swing.JTextField firstNameM;
-    private javax.swing.JMenu fisiere;
-    private javax.swing.JMenuItem iesire;
+    private javax.swing.JMenu help;
     private javax.swing.JMenuItem inregistrare;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -758,12 +778,14 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JList list;
     private javax.swing.JButton modifyButton;
     private javax.swing.JFrame modifyWindow;
+    private javax.swing.JMenuItem open;
+    private javax.swing.JPanel panel;
     private javax.swing.JTextField phone;
     private javax.swing.JCheckBox phoneCheck;
     private javax.swing.JCheckBox phoneCheckM;
     private javax.swing.JTextField phoneM;
     private javax.swing.JButton resetButton;
-    private javax.swing.JMenuItem salvare;
+    private javax.swing.JMenuItem save;
     private javax.swing.JButton sortButton;
     private javax.swing.JComboBox sortItems;
     private javax.swing.JTextField surName;
