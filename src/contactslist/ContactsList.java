@@ -22,8 +22,21 @@ public class ContactsList {
         Class.forName("com.mysql.cj.jdbc.Driver");  
         
         Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
-        Statement s = dbConn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        Statement s = dbConn.createStatement();
         
+        s.executeQuery("select * from Contacts");
+        ResultSet rs = s.getResultSet();
+
+        while(rs.next()) {
+                System.out.println(rs.getString("firstN"));
+                System.out.println(rs.getString("surN"));
+                System.out.println(rs.getString("birthday"));
+                System.out.println(rs.getString("phone"));
+            }
+
+        
+        
+    
         WelcomeScreen welcome = new WelcomeScreen();
         welcome.setVisible(true);
         
@@ -44,8 +57,19 @@ public class ContactsList {
         }
     }
     
-    public void addContact(Contact newContact) {
-        contacts.add(newContact);
-    }
+    
+    public Connection connect(){
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
+            return dbConn;
+        }catch(SQLException|ClassNotFoundException e){
+            System.out.println("ERROR connecting to database!");
+            System.out.println(e.toString());
+     }
+        return null;
+  }
+
 }
    

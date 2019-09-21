@@ -9,6 +9,9 @@
           <Color id="Default Cursor"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="MainApp_addWindow"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
