@@ -555,6 +555,7 @@ public class MainApp extends javax.swing.JFrame {
                 s.setString(2, c.getSurN());
                 s.setString(3, c.getBirthDay().toString());
                 s.setString(4, c.getPhone().toString());
+                s.executeUpdate();
                 displayDatabase();
                 
             } catch (SQLException ex) {
@@ -570,6 +571,10 @@ public class MainApp extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_addButtonActionPerformed
 
+    public void displayInJList() {
+        
+    }
+    
     public void displayDatabase() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
