@@ -22,6 +22,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -557,13 +558,13 @@ public class MainApp extends javax.swing.JFrame {
                 s.setString(4, c.getPhone().toString());
                 s.executeUpdate();
                 displayDatabase();
+                displayInJList();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.println("Nu a mers!");
             }
-            
-            people.addElement(c);
+          
             firstName.setText("");  
             surName.setText("");     
             bDay.setText("");        
@@ -571,7 +572,28 @@ public class MainApp extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_addButtonActionPerformed
 
-    public void displayInJList() {
+    public void displayInJList() {                 // de rezolvat afisarea de mai multe ori a unui contact
+        String sql = "select firstN, surN, birthday, phone from Contacts";
+        try {
+            PreparedStatement s = connect().prepareStatement(sql);
+            ResultSet results = s.executeQuery();
+            
+            while (results.next()) {
+                String firstN = results.getString(1);
+                String surN = results.getString(2);
+                String bDay = results.getString(3);                                               
+                Phone phone = null;
+                
+                if (results.getString(4).startsWith("07"))
+                    phone = new MobilePhone(results.getString(4));
+                if (results.getString(4).startsWith("02") || results.getString(4).startsWith("03"))
+                    phone = new Landline(results.getString(4));
+                Contact c = new Contact(firstN, surN, LocalDate.parse(bDay), phone);
+                people.addElement(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
