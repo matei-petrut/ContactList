@@ -53,16 +53,16 @@ public class MainApp extends javax.swing.JFrame {
         super.setIconImage(icon);
         super.setTitle("Agenda");
         open.setVisible(false);
-        MobilePhone pn = new MobilePhone("0745678765");
-        LocalDate ld = LocalDate.of(1998, 12, 12);
-        Contact c1 = new Contact("Andr", "Alin", ld, pn);
-        Contact c2 = new Contact("Ba", "Ali", ld, pn);
-        Contact c3 = new Contact("Mir", "Al", ld, pn);
-       
-        people.addElement(c1);
-        people.addElement(c2);
-        people.addElement(c3);
-        people.copyInto(aux);
+//        MobilePhone pn = new MobilePhone("0745678765");
+//        LocalDate ld = LocalDate.of(1998, 12, 12);
+//        Contact c1 = new Contact("Andr", "Alin", ld, pn);
+//        Contact c2 = new Contact("Ba", "Ali", ld, pn);
+//        Contact c3 = new Contact("Mir", "Al", ld, pn);
+//       
+//        people.addElement(c1);
+//        people.addElement(c2);
+//        people.addElement(c3);
+//        people.copyInto(aux);
        
     }
 
@@ -557,7 +557,9 @@ public class MainApp extends javax.swing.JFrame {
                 s.setString(3, c.getBirthDay().toString());
                 s.setString(4, c.getPhone().toString());
                 s.executeUpdate();
-                displayDatabase();
+                //displayDatabase();
+                //list.setModel(null);
+                emptyJList();
                 displayInJList();
                 
             } catch (SQLException ex) {
@@ -572,7 +574,15 @@ public class MainApp extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_addButtonActionPerformed
 
+    public void emptyJList() {
+        for (int i = 0; i < people.getSize(); i++) {
+            System.out.println(i);
+            people.removeElementAt(i);
+        }
+    }
+    
     public void displayInJList() {                 // de rezolvat afisarea de mai multe ori a unui contact
+        //list.setModel(people);
         String sql = "select firstN, surN, birthday, phone from Contacts";
         try {
             PreparedStatement s = connect().prepareStatement(sql);
