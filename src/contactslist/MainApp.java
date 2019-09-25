@@ -551,16 +551,14 @@ public class MainApp extends javax.swing.JFrame {
         if (flagName && flagPhone) {
             Contact c = new Contact(firstName.getText(), surName.getText(), date, phoneN);
             try {
-                PreparedStatement s = connect().prepareStatement("insert into Contacts values (?, ?, ?, ?)");
+                PreparedStatement s = Database.connect().prepareStatement("insert into Contacts values (?, ?, ?, ?)");
                 s.setString(1, c.getFristN());
                 s.setString(2, c.getSurN());
                 s.setString(3, c.getBirthDay().toString());
                 s.setString(4, c.getPhone().toString());
                 s.executeUpdate();
-                //displayDatabase();
-                //list.setModel(null);
-                emptyJList();
-                displayInJList();
+                Database.emptyJList(people);
+                Database.displayInJList(people);
                 
             } catch (SQLException ex) {
                 Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -574,62 +572,6 @@ public class MainApp extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_addButtonActionPerformed
 
-    public void emptyJList() {
-        for (int i = 0; i < people.getSize(); i++) {
-            System.out.println(i);
-            people.removeElementAt(i);
-        }
-    }
-    
-    public void displayInJList() {                 // de rezolvat afisarea de mai multe ori a unui contact
-        //list.setModel(people);
-        String sql = "select firstN, surN, birthday, phone from Contacts";
-        try {
-            PreparedStatement s = connect().prepareStatement(sql);
-            ResultSet results = s.executeQuery();
-            
-            while (results.next()) {
-                String firstN = results.getString(1);
-                String surN = results.getString(2);
-                String bDay = results.getString(3);                                               
-                Phone phone = null;
-                
-                if (results.getString(4).startsWith("07"))
-                    phone = new MobilePhone(results.getString(4));
-                if (results.getString(4).startsWith("02") || results.getString(4).startsWith("03"))
-                    phone = new Landline(results.getString(4));
-                Contact c = new Contact(firstN, surN, LocalDate.parse(bDay), phone);
-                people.addElement(c);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    public void displayDatabase() {
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
-            Statement s = dbConn.createStatement();
-            String q = "Select * from Contacts";
-	    ResultSet rs=s.executeQuery(q);
-			
-	    if(rs.next()){ 
-		do{
-                    System.out.println(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3)+","+rs.getString(4));
-		}while(rs.next());
-            }else{
-		System.out.println("Record Not Found...");
-            }
-	    dbConn.close();
-            
-        }catch(SQLException|ClassNotFoundException e){
-            System.out.println("ERROR connecting to database!");
-            System.out.println(e.toString());
-        }
-    }
-    
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
         LocalDate date = LocalDate.parse(bDayM.getText());
         Phone phoneN;
@@ -790,19 +732,6 @@ public class MainApp extends javax.swing.JFrame {
         people.add(index2, c1);
     }
     
-    public Connection connect(){
-        
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
-            return dbConn;
-        }catch(SQLException|ClassNotFoundException e){
-            System.out.println("ERROR connecting to database!");
-            System.out.println(e.toString());
-     }
-        return null;
-  }
-   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
