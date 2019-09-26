@@ -76,4 +76,65 @@ public abstract class Database {
      }
         return null;
   }
+     
+     public static void addInDatabase(DefaultListModel model, Contact c) {
+          try {
+                PreparedStatement s = Database.connect().prepareStatement("insert into Contacts values (?, ?, ?, ?)");
+                s.setString(1, c.getFristN());
+                s.setString(2, c.getSurN());
+                s.setString(3, c.getBirthDay().toString());
+                s.setString(4, c.getPhone().toString());
+                s.executeUpdate();
+                Database.emptyJList(model);
+                Database.displayInJList(model);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Nu a mers!");
+            }
+     }
+     
+     public static void removeFromDatabase(DefaultListModel model, Contact c) {
+         try {
+                PreparedStatement s = Database.connect().prepareStatement("delete from contacts where firstN=? and surN=? and phone=?");
+                s.setString(1, c.getFristN());
+                s.setString(2, c.getSurN());
+                s.setString(3, c.getPhone().toString());
+                s.executeUpdate();
+                Database.emptyJList(model);
+                Database.displayInJList(model);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Nu a mers!");
+            }
+     }
+     
+     public static void sortDatabase(String criterion, DefaultListModel model) {
+         String sql = "select firstN, surN, birthday, phone from Contacts order by ?";
+        try {
+            PreparedStatement s = Database.connect().prepareStatement(sql);
+            s.setString(1, criterion);
+            ResultSet results = s.executeQuery();
+            s.executeQuery();
+            while (results.next()) {
+                String firstN = results.getString(1);
+                String surN = results.getString(2);
+                String bDay = results.getString(3);                                               
+                Phone phone = null;
+                
+                if (results.getString(4).startsWith("07"))
+                    phone = new MobilePhone(results.getString(4));
+                if (results.getString(4).startsWith("02") || results.getString(4).startsWith("03"))
+                    phone = new Landline(results.getString(4));
+                Contact c = new Contact(firstN, surN, LocalDate.parse(bDay), phone);
+                model.addElement(c);
+            }
+           // Database.emptyJList(model);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+     }
 }

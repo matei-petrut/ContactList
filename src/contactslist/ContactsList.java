@@ -19,24 +19,6 @@ public class ContactsList {
     Predicate<Contact> filtruCurent;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Class.forName("com.mysql.cj.jdbc.Driver");  
-        
-        Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
-        Statement s = dbConn.createStatement();
-        
-        s.executeQuery("select * from Contacts");
-        ResultSet rs = s.getResultSet();
-
-        while(rs.next()) {
-                System.out.println(rs.getString("firstN"));
-                System.out.println(rs.getString("surN"));
-                System.out.println(rs.getString("birthday"));
-                System.out.println(rs.getString("phone"));
-            }
-
-        
-        
-    
         WelcomeScreen welcome = new WelcomeScreen();
         welcome.setVisible(true);
         
@@ -56,20 +38,5 @@ public class ContactsList {
             
         }
     }
-    
-    
-    public Connection connect(){
-        
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConn=DriverManager.getConnection("jdbc:mysql://localhost:3306/contacts","root","Steaua98");  
-            return dbConn;
-        }catch(SQLException|ClassNotFoundException e){
-            System.out.println("ERROR connecting to database!");
-            System.out.println(e.toString());
-     }
-        return null;
-  }
-
 }
    
