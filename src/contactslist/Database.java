@@ -18,6 +18,10 @@ public abstract class Database {
     
     public static void displayInJList(DefaultListModel model) {                
         String sql = "select firstN, surN, birthday, phone from Contacts";
+        Database.displayDatabaseByFilter(model, sql);
+    }
+    
+    public static void displayDatabaseByFilter(DefaultListModel model, String sql) {
         try {
             PreparedStatement s = connect().prepareStatement(sql);
             ResultSet results = s.executeQuery();
@@ -38,7 +42,6 @@ public abstract class Database {
         } catch (SQLException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     public static void displayDatabase() {
@@ -111,30 +114,37 @@ public abstract class Database {
      }
      
      public static void sortDatabase(String criterion, DefaultListModel model) {
-         String sql = "select firstN, surN, birthday, phone from Contacts order by ?";
-        try {
-            PreparedStatement s = Database.connect().prepareStatement(sql);
-            s.setString(1, criterion);
-            ResultSet results = s.executeQuery();
-            s.executeQuery();
-            while (results.next()) {
-                String firstN = results.getString(1);
-                String surN = results.getString(2);
-                String bDay = results.getString(3);                                               
-                Phone phone = null;
-                
-                if (results.getString(4).startsWith("07"))
-                    phone = new MobilePhone(results.getString(4));
-                if (results.getString(4).startsWith("02") || results.getString(4).startsWith("03"))
-                    phone = new Landline(results.getString(4));
-                Contact c = new Contact(firstN, surN, LocalDate.parse(bDay), phone);
-                model.addElement(c);
-            }
-           // Database.emptyJList(model);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         Database.emptyJList(model);
+         String sql = "select firstN, surN, birthday, phone from Contacts order by " + criterion;
+         Database.displayDatabaseByFilter(model, sql);
+     }
+     
+     public static void filterDatabase(DefaultListModel model, Filter filter) {
+         Database.emptyJList(model);
+         String sql = Database.getStringForFilter(filter);
+         Database.displayDatabaseByFilter(model, sql);
+     }
+     
+     public static String getStringForFilter(Filter filter) {
+         String sql = null;
          
+         switch(filter) {
+             case LANDLINE :
+                 sql = "" + "select firstN, surN, birthday, phone from contacts where phone like '02%' or phone like '03%'";
+                 break;
+                 
+             case MOBILE_PHONE :
+                 sql = "" + "select firstN, surN, birthday, phone from contacts where phone like '07%'";
+                 break;
+                 
+             case BIRTHDAY_TODAY :
+                 sql ="" + "select firstN, surN, birthday, phone from contacts where day(current_date()) = day(birthday)";
+                 break;
+                 
+             case BIRTHDAY_THIS_MONTH :
+                 sql = "" + "select firstN, surN, birthday, phone from contacts where month(birthday) = month(current_date()) and day(current_date()) < day(birthday)";
+                 break;    
+         }
+         return sql;
      }
 }

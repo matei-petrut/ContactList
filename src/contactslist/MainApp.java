@@ -626,39 +626,12 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_sortButtonActionPerformed
 
     private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
-        Filter selectedFilter = (Filter)filter.getSelectedItem();
-      
-        for (int i = 0; i < people.getSize(); i++) {
-            Contact c = (Contact)people.getElementAt(i);
-            
-            switch(selectedFilter) {
-                case LANDLINE:
-                    if (c.getPhone().toString().startsWith("07"))
-                        people.removeElement(c);
-                    break;
-                    
-                case MOBILE_PHONE:
-                    if (!c.getPhone().toString().startsWith("07"))
-                        people.removeElement(c);
-                    break;    
-                    
-                case BIRTHDAY_TODAY:
-                    if ((c.getBirthDay().getMonth() != LocalDate.now().getMonth()) &&
-                           (c.getBirthDay().getDayOfMonth() != LocalDate.now().getDayOfMonth()))
-                        people.removeElement(c);
-                    break;    
-                    
-                case BIRTHDAY_THIS_MONTH:
-                    if ((c.getBirthDay().getMonth() != LocalDate.now().getMonth()) &&
-                            (c.getBirthDay().getDayOfMonth() > LocalDate.now().getDayOfMonth()))
-                        people.removeElement(c);
-                    break;        
-            }
-        }        
+        Database.filterDatabase(people, (Filter)filter.getSelectedItem());
     }//GEN-LAST:event_filterButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        
+        Database.emptyJList(people);
+        Database.displayInJList(people);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
