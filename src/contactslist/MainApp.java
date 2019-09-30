@@ -3,9 +3,11 @@ package contactslist;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,11 +39,13 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
     BufferedImage icon, image;
+    ImageIcon i;
     
     public MainApp() {
         initComponents();
         list.setModel(people);
         sortItems.setModel(sort);
+        filter.setSelectedItem((Filter)Filter.NO_FILTER);
         filterItems.setModel(filter);
         try {
            icon = ImageIO.read(new File("src\\images\\icon.jpg"));
@@ -93,12 +97,12 @@ public class MainApp extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         filterItems = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        filtru = new javax.swing.JTextField();
+        textFilter = new javax.swing.JTextField();
         sortItems = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
         resetButton = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
+        adsLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         files = new javax.swing.JMenu();
         open = new javax.swing.JMenuItem();
@@ -325,9 +329,14 @@ public class MainApp extends javax.swing.JFrame {
 
         jLabel3.setText("filtru:");
 
-        filtru.addActionListener(new java.awt.event.ActionListener() {
+        textFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filtruActionPerformed(evt);
+                textFilterActionPerformed(evt);
+            }
+        });
+        textFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textFilterKeyPressed(evt);
             }
         });
 
@@ -352,8 +361,9 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Viorica.png"))); // NOI18N
+        adsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adsLabel.setPreferredSize(new java.awt.Dimension(200, 200));
+        adsLabel.setRequestFocusEnabled(false);
 
         files.setText("Fisiere");
 
@@ -399,7 +409,7 @@ public class MainApp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addBt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
                         .addComponent(deleteBt)
                         .addGap(69, 69, 69)
                         .addComponent(editBt)
@@ -417,7 +427,7 @@ public class MainApp extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(filtru)
+                                .addComponent(textFilter)
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -430,8 +440,8 @@ public class MainApp extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(adsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,7 +452,7 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(filterItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(filtru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sortButton)
@@ -451,10 +461,8 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(resetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(adsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deleteBt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,6 +470,8 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(addBt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        adsLabel.getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -487,10 +497,29 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_filterItemsActionPerformed
 
-    private void filtruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_filtruActionPerformed
+    private void textFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFilterActionPerformed
+        String filter = textFilter.getText();
+        filterModel(people, filter);
+    }//GEN-LAST:event_textFilterActionPerformed
 
+    public void filterModel(DefaultListModel model, String filter) {
+    for (int i = 0; i < people.getSize(); i++) {
+        Contact c = (Contact)people.getElementAt(i);
+        if ((!c.getBirthDay().toString().startsWith(filter)) ||
+                (!c.getPhone().toString().startsWith(filter)) ||
+                (!c.getFristN().startsWith(filter)) ||
+                (!c.getSurN().startsWith(filter))) {
+            if (model.contains(c)) {
+                model.removeElement(c);
+            }
+        } else {
+            if (!model.contains(c)) {
+                model.addElement(c);
+            }
+        }
+    }
+}
+    
     private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
         
     }//GEN-LAST:event_helpActionPerformed
@@ -615,14 +644,10 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_sortItemsActionPerformed
 
     private void sortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortButtonActionPerformed
-         if ((Sorting)sort.getSelectedItem() == Sorting.BY_BIRTHDAY)
-            Database.sortDatabase("birthday", people);
-        else if ((Sorting)sort.getSelectedItem() == Sorting.BY_FIRST_NAME)
-            Database.sortDatabase("firstN", people);
-        else if ((Sorting)sort.getSelectedItem() == Sorting.BY_PHONE)
-            Database.sortDatabase("phone", people);
-        else if ((Sorting)sort.getSelectedItem() == Sorting.BY_SUR_NAME)
-            Database.sortDatabase("surN", people);
+        if (filter.getSelectedItem() != Filter.NO_FILTER)
+            Database.sortInFilter(people, (Filter)filter.getSelectedItem(), (Sorting)sort.getSelectedItem());
+        else
+            Database.sortDatabase((Sorting)sort.getSelectedItem(), people);
     }//GEN-LAST:event_sortButtonActionPerformed
 
     private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
@@ -633,6 +658,11 @@ public class MainApp extends javax.swing.JFrame {
         Database.emptyJList(people);
         Database.displayInJList(people);
     }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void textFilterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFilterKeyPressed
+       String filter = textFilter.getText();
+        filterModel(people, filter);
+    }//GEN-LAST:event_textFilterKeyPressed
 
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
         people.removeElementAt(index1);
@@ -678,6 +708,7 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton addBt;
     private javax.swing.JButton addButton;
     private javax.swing.JFrame addWindow;
+    private javax.swing.JLabel adsLabel;
     private javax.swing.JTextField bDay;
     private javax.swing.JTextField bDayM;
     private javax.swing.JButton cancelButton;
@@ -689,7 +720,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenu files;
     private javax.swing.JButton filterButton;
     private javax.swing.JComboBox filterItems;
-    private javax.swing.JTextField filtru;
     private javax.swing.JTextField firstName;
     private javax.swing.JTextField firstNameM;
     private javax.swing.JMenu help;
@@ -697,7 +727,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -722,5 +751,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JComboBox sortItems;
     private javax.swing.JTextField surName;
     private javax.swing.JTextField surNameM;
+    private javax.swing.JTextField textFilter;
     // End of variables declaration//GEN-END:variables
 }

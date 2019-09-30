@@ -13,7 +13,8 @@ public enum Filter {
     LANDLINE,
     MOBILE_PHONE,
     BIRTHDAY_TODAY,
-    BIRTHDAY_THIS_MONTH;
+    BIRTHDAY_THIS_MONTH,
+    NO_FILTER;
     
     public String toString() {
         return this.name().replace("_", " ");

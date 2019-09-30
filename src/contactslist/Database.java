@@ -113,15 +113,21 @@ public abstract class Database {
             }
      }
      
-     public static void sortDatabase(String criterion, DefaultListModel model) {
+     public static void sortDatabase(Sorting sort, DefaultListModel model) {
          Database.emptyJList(model);
-         String sql = "select firstN, surN, birthday, phone from Contacts order by " + criterion;
+         String sql = "select firstN, surN, birthday, phone from Contacts order by " + Database.getStringForSort(sort);
          Database.displayDatabaseByFilter(model, sql);
      }
      
      public static void filterDatabase(DefaultListModel model, Filter filter) {
          Database.emptyJList(model);
          String sql = Database.getStringForFilter(filter);
+         Database.displayDatabaseByFilter(model, sql);
+     }
+     
+     public static void sortInFilter(DefaultListModel model, Filter filter, Sorting sort) {
+         Database.emptyJList(model);
+         String sql = Database.getStringForFilter(filter) + Database.getStringForSortInFilter(sort);
          Database.displayDatabaseByFilter(model, sql);
      }
      
@@ -143,8 +149,59 @@ public abstract class Database {
                  
              case BIRTHDAY_THIS_MONTH :
                  sql = "" + "select firstN, surN, birthday, phone from contacts where month(birthday) = month(current_date()) and day(current_date()) < day(birthday)";
+                 break; 
+                 
+             case NO_FILTER :
+                 sql = "" + "select firstN, surN, birthday, phone from contacts";
                  break;    
          }
+         return sql;
+     }
+     
+     public static String getStringForSort(Sorting sort) {
+         String sql = null;
+         
+         switch(sort) {
+             case BY_FIRST_NAME:
+                sql = "" + "firstN";
+                break;
+                 
+             case BY_SUR_NAME:
+                sql = "" + "surN";
+                break;
+                 
+             case BY_BIRTHDAY:
+                sql = "" + "birthday";
+                break;
+                 
+             case BY_PHONE:
+                sql = "" + "phone";
+                break;    
+         }
+         return sql;
+     }
+     
+     public static String getStringForSortInFilter(Sorting sorting) {
+         String sql = null;
+         
+         switch(sorting) {
+             case BY_FIRST_NAME:
+                sql = "" + "order by firstN asc";
+                break;
+                 
+             case BY_SUR_NAME:
+                sql = "" + "order by surN asc";
+                break;
+                 
+             case BY_BIRTHDAY:
+                sql = "" + "order by birthday asc";
+                break;
+                 
+             case BY_PHONE:
+                sql = "" + "order by phone asc";
+                break;    
+         }
+         
          return sql;
      }
 }
