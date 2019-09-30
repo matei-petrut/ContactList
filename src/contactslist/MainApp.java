@@ -56,6 +56,20 @@ public class MainApp extends javax.swing.JFrame {
         super.setIconImage(icon);
         super.setTitle("Agenda");
         open.setVisible(false);
+//        try {
+//            image = ImageIO.read(new File("src\\images\\icon.jpg"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        Image dimg = image.getScaledInstance(adsLabel.getWidth(), adsLabel.getHeight(), Image.SCALE_SMOOTH);
+//        ImageIcon imgIcon = new ImageIcon(dimg);
+//        adsLabel.setIcon(imgIcon);
+        
+        Thread t1 = new DisplayAds(adsLabel);
+        t1.start();
+        
         Database.displayInJList(people);
     }
 
