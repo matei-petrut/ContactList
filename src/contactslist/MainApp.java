@@ -38,8 +38,9 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultListModel people = new DefaultListModel();
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
-    BufferedImage icon, image;
-    ImageIcon i;
+    BufferedImage icon;
+    boolean shareware;
+    Thread t1;
     
     public MainApp() {
         initComponents();
@@ -55,20 +56,16 @@ public class MainApp extends javax.swing.JFrame {
        
         super.setIconImage(icon);
         super.setTitle("Agenda");
-        open.setVisible(false);
-//        try {
-//            image = ImageIO.read(new File("src\\images\\icon.jpg"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        
-//        
-//        Image dimg = image.getScaledInstance(adsLabel.getWidth(), adsLabel.getHeight(), Image.SCALE_SMOOTH);
-//        ImageIcon imgIcon = new ImageIcon(dimg);
-//        adsLabel.setIcon(imgIcon);
-        
-        Thread t1 = new DisplayAds(adsLabel);
+        shareware = false;
+        t1 = new DisplayAds(adsLabel);
         t1.start();
+        open.setVisible(false);
+        save.setVisible(false);
+        
+        for (int i = 0; i <1000; i++) {
+            //if (i == 998)
+                //t1.stopRunning();
+        }
         
         Database.displayInJList(people);
     }
@@ -400,6 +397,11 @@ public class MainApp extends javax.swing.JFrame {
         });
 
         inregistrare.setText("Inregistrare");
+        inregistrare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inregistrareActionPerformed(evt);
+            }
+        });
         help.add(inregistrare);
 
         despre.setText("Despre");
@@ -677,6 +679,16 @@ public class MainApp extends javax.swing.JFrame {
        String filter = textFilter.getText();
         filterModel(people, filter);
     }//GEN-LAST:event_textFilterKeyPressed
+
+    private void inregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inregistrareActionPerformed
+        String code = JOptionPane.showInputDialog(rootPane, (String)"Introduceti codul de activare:", "Activare", JOptionPane.INFORMATION_MESSAGE);
+        if (SharewareMode.verifyCode(code)) {
+            JOptionPane.showMessageDialog(rootPane, "Felicitari! Codul de activare a functionat!");
+            
+        } else
+            JOptionPane.showMessageDialog(rootPane, "Codul de activare nu este valid!");
+
+    }//GEN-LAST:event_inregistrareActionPerformed
 
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
         people.removeElementAt(index1);
