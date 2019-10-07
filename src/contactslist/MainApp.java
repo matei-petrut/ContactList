@@ -4,6 +4,7 @@ package contactslist;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +27,15 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+//import javax.swing.Timer;
+import java.util.TimerTask;
 
 
 public class MainApp extends javax.swing.JFrame {
@@ -39,8 +44,7 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
     BufferedImage icon;
-    boolean shareware;
-    Thread t1;
+    public static boolean flag = true;
     
     public MainApp() {
         initComponents();
@@ -56,18 +60,50 @@ public class MainApp extends javax.swing.JFrame {
        
         super.setIconImage(icon);
         super.setTitle("Agenda");
-        shareware = false;
-        t1 = new DisplayAds(adsLabel);
-        t1.start();
+        Timer t = new Timer();
+        
+        TimerTask task = new TimerTask() {
+            String[] images = {"1", "2", "3", "4", "5", "6", "7", "8"};
+            BufferedImage image;
+               
+            public void run() {
+               
+            for (int i = 1; i < 9; i++) {
+                if (!flag) {
+                    this.cancel();
+                    SharewareMode.removeAds(adsLabel);
+                    SharewareMode.extendJList(list, scrollPane);
+                    open.setVisible(true);
+                    save.setVisible(true);
+                }else {
+                    try {
+                        image = ImageIO.read(new File("src\\images\\ad" + i + ".jpg"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                Image dimg = image.getScaledInstance(adsLabel.getWidth(), adsLabel.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon imgIcon = new ImageIcon(dimg);
+                adsLabel.setIcon(imgIcon);
+                
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(DisplayAds.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
+                }
+           }
+           }
+            
+        };
+        
+        t.schedule(task, 0, 2000);
+        
+        
         open.setVisible(false);
         save.setVisible(false);
-        
-        for (int i = 0; i <1000; i++) {
-            //if (i == 998)
-                //t1.stopRunning();
-        }
-        
         Database.displayInJList(people);
+        System.out.println(flag);
     }
 
     @SuppressWarnings("unchecked")
@@ -110,7 +146,7 @@ public class MainApp extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         textFilter = new javax.swing.JTextField();
         sortItems = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPane = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
         resetButton = new javax.swing.JButton();
         adsLabel = new javax.swing.JLabel();
@@ -120,8 +156,8 @@ public class MainApp extends javax.swing.JFrame {
         save = new javax.swing.JMenuItem();
         exit = new javax.swing.JMenuItem();
         help = new javax.swing.JMenu();
-        inregistrare = new javax.swing.JMenuItem();
-        despre = new javax.swing.JMenuItem();
+        register = new javax.swing.JMenuItem();
+        about = new javax.swing.JMenuItem();
 
         addWindow.setAlwaysOnTop(true);
         addWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -363,7 +399,7 @@ public class MainApp extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(list);
+        scrollPane.setViewportView(list);
 
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -396,21 +432,21 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        inregistrare.setText("Inregistrare");
-        inregistrare.addActionListener(new java.awt.event.ActionListener() {
+        register.setText("Inregistrare");
+        register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inregistrareActionPerformed(evt);
+                registerActionPerformed(evt);
             }
         });
-        help.add(inregistrare);
+        help.add(register);
 
-        despre.setText("Despre");
-        despre.addActionListener(new java.awt.event.ActionListener() {
+        about.setText("Despre");
+        about.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                despreActionPerformed(evt);
+                aboutActionPerformed(evt);
             }
         });
-        help.add(despre);
+        help.add(about);
 
         jMenuBar1.add(help);
 
@@ -454,8 +490,8 @@ public class MainApp extends javax.swing.JFrame {
                             .addComponent(filterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(adsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
@@ -477,8 +513,8 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(resetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(adsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(adsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(scrollPane))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deleteBt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -540,9 +576,9 @@ public class MainApp extends javax.swing.JFrame {
         
     }//GEN-LAST:event_helpActionPerformed
 
-    private void despreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despreActionPerformed
+    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
         
-    }//GEN-LAST:event_despreActionPerformed
+    }//GEN-LAST:event_aboutActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         addWindow.setVisible(false);
@@ -680,16 +716,16 @@ public class MainApp extends javax.swing.JFrame {
         filterModel(people, filter);
     }//GEN-LAST:event_textFilterKeyPressed
 
-    private void inregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inregistrareActionPerformed
+    private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
         String code = JOptionPane.showInputDialog(rootPane, (String)"Introduceti codul de activare:", "Activare", JOptionPane.INFORMATION_MESSAGE);
         if (SharewareMode.verifyCode(code)) {
-            JOptionPane.showMessageDialog(rootPane, "Felicitari! Codul de activare a functionat!");
-            
+            JOptionPane.showMessageDialog(rootPane, "Felicitari! Codul de activare a functionat! De acum aveti acces la toate functionalitatile aplicatiei!");
+            flag = false;
         } else
             JOptionPane.showMessageDialog(rootPane, "Codul de activare nu este valid!");
-
-    }//GEN-LAST:event_inregistrareActionPerformed
-
+        
+    }//GEN-LAST:event_registerActionPerformed
+   
     public void switchItems(Contact c1, Contact c2, int index1, int index2) {
         people.removeElementAt(index1);
         people.add(index1, c2);
@@ -731,6 +767,7 @@ public class MainApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem about;
     private javax.swing.JButton addBt;
     private javax.swing.JButton addButton;
     private javax.swing.JFrame addWindow;
@@ -740,7 +777,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton cancelButtonM;
     private javax.swing.JButton deleteBt;
-    private javax.swing.JMenuItem despre;
     private javax.swing.JButton editBt;
     private javax.swing.JMenuItem exit;
     private javax.swing.JMenu files;
@@ -749,7 +785,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JTextField firstName;
     private javax.swing.JTextField firstNameM;
     private javax.swing.JMenu help;
-    private javax.swing.JMenuItem inregistrare;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -762,7 +797,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList list;
     private javax.swing.JButton modifyButton;
     private javax.swing.JFrame modifyWindow;
@@ -771,8 +805,10 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JCheckBox phoneCheck;
     private javax.swing.JCheckBox phoneCheckM;
     private javax.swing.JTextField phoneM;
+    private javax.swing.JMenuItem register;
     private javax.swing.JButton resetButton;
     private javax.swing.JMenuItem save;
+    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JButton sortButton;
     private javax.swing.JComboBox sortItems;
     private javax.swing.JTextField surName;
