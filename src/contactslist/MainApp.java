@@ -6,8 +6,15 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,6 +34,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,6 +44,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 //import javax.swing.Timer;
 import java.util.TimerTask;
+import javax.swing.JFileChooser;
 
 
 public class MainApp extends javax.swing.JFrame {
@@ -44,7 +53,7 @@ public class MainApp extends javax.swing.JFrame {
     private DefaultComboBoxModel sort = new DefaultComboBoxModel(Sorting.values());
     private DefaultComboBoxModel filter = new DefaultComboBoxModel(Filter.values());
     BufferedImage icon;
-    public static boolean flag = true;
+    public static boolean flag = false;
     
     public MainApp() {
         initComponents();
@@ -103,7 +112,6 @@ public class MainApp extends javax.swing.JFrame {
         open.setVisible(false);
         save.setVisible(false);
         Database.displayInJList(people);
-        System.out.println(flag);
     }
 
     @SuppressWarnings("unchecked")
@@ -415,9 +423,19 @@ public class MainApp extends javax.swing.JFrame {
         files.setText("Fisiere");
 
         open.setText("Deschidere");
+        open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openActionPerformed(evt);
+            }
+        });
         files.add(open);
 
         save.setText("Salvare");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
         files.add(save);
 
         exit.setText("Iesire");
@@ -725,40 +743,73 @@ public class MainApp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Codul de activare nu este valid!");
         
     }//GEN-LAST:event_registerActionPerformed
-   
-    public void switchItems(Contact c1, Contact c2, int index1, int index2) {
-        people.removeElementAt(index1);
-        people.add(index1, c2);
-        people.removeElementAt(index2);
-        people.add(index2, c1);
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+        File file = fc.getSelectedFile();
+        writeListToFile(file);
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        try {
+            readFileToList(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openActionPerformed
+       
+    private void readFileToList(File file) throws FileNotFoundException {
+        DefaultListModel model = (DefaultListModel)list.getModel();
+        Scanner sc = new Scanner(file);
+        String line;
+        
+        while (sc.hasNextLine()) {
+            line = sc.nextLine();
+            Phone phone;
+            String name = line.substring(0, line.indexOf(" "));
+            String surName = line.substring(name.length()+1, line.indexOf(','));
+            String date = line.substring(surName.length()+name.length()+3, line.indexOf(',', surName.length()+name.length()+4));
+            String number = line.substring(date.length()+surName.length()+name.length()+5);
+            
+            if (number.startsWith("07"))
+                phone = new MobilePhone(number);
+            else
+                phone = new Landline(number);
+            
+            Contact contact = new Contact(name, surName, LocalDate.parse(date), phone);
+            model.addElement(contact);
+            list.setModel(model);
+        }
+    }
+    
+    private void writeListToFile(File file) {
+        if(file.exists()) {
+            // check with user via JOptionPane.showConfirmDialog
+            // before overwriting the file.
+            System.out.println("File " + file.getPath() + " exists");
+        }
+        DefaultListModel model = (DefaultListModel)list.getModel();
+        try {
+            BufferedWriter bw = new BufferedWriter(
+                                new OutputStreamWriter(
+                                new FileOutputStream(file)));
+            for(int i = 0; i < model.getSize(); i++) {
+                String line = (String)model.getElementAt(i).toString();
+                bw.write(line, 0, line.length());
+                bw.newLine();
+            }
+            bw.close();
+        } catch(IOException e) {
+            System.out.println("Write error: " + e.getMessage());
+        }            
     }
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainApp().setVisible(true);

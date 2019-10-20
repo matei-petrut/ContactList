@@ -7,12 +7,13 @@ public class Landline extends Phone{
         super(phoneNb);
     }
     public boolean validateNumber(String phoneNb) {
-        if (phoneNb == null)
+        if (phoneNb == null) 
             return false;
-        if (phoneNb.length() != 10)
+        if (phoneNb.length() != 10) 
             return false;
-        if ((!phoneNb.startsWith("02")) || (!phoneNb.startsWith("03")))
+        if (phoneNb.startsWith("02") || phoneNb.startsWith("03")) 
+            return true;
+        else
             return false;
-        return true;
     }
 }
